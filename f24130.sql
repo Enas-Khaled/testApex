@@ -33,14 +33,14 @@ prompt APPLICATION 24130 - studyApis
 -- Application Export:
 --   Application:     24130
 --   Name:            studyApis
---   Date and Time:   06:09 Sunday October 27, 2024
+--   Date and Time:   06:14 Sunday October 27, 2024
 --   Exported By:     ENAS.AH.KHALED@GMAIL.COM
 --   Flashback:       0
 --   Export Type:     Application Export
---     Pages:                      6
+--     Pages:                      7
 --       Items:                   11
 --       Processes:                5
---       Regions:                 10
+--       Regions:                 12
 --       Buttons:                  3
 --     Shared Components:
 --       Logic:
@@ -48,7 +48,7 @@ prompt APPLICATION 24130 - studyApis
 --       Navigation:
 --         Lists:                  2
 --         Breadcrumbs:            1
---           Entries:              4
+--           Entries:              5
 --       Security:
 --         Authentication:         1
 --         Authorization:          1
@@ -441,7 +441,7 @@ wwv_flow_imp_shared.create_list(
  p_id=>wwv_flow_imp.id(60257283499833546055)
 ,p_name=>'Navigation Menu'
 ,p_list_status=>'PUBLIC'
-,p_version_scn=>15585129572342
+,p_version_scn=>15586019251585
 );
 wwv_flow_imp_shared.create_list_item(
  p_id=>wwv_flow_imp.id(60257783727168546253)
@@ -477,6 +477,15 @@ wwv_flow_imp_shared.create_list_item(
 ,p_list_item_icon=>'fa-file-o'
 ,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
 ,p_list_item_current_for_pages=>'3'
+);
+wwv_flow_imp_shared.create_list_item(
+ p_id=>wwv_flow_imp.id(65095117699840867732)
+,p_list_item_display_sequence=>50
+,p_list_item_link_text=>'emp_cal'
+,p_list_item_link_target=>'f?p=&APP_ID.:6:&APP_SESSION.::&DEBUG.:::'
+,p_list_item_icon=>'fa-calendar-o'
+,p_list_item_current_type=>'COLON_DELIMITED_PAGE_LIST'
+,p_list_item_current_for_pages=>'6'
 );
 end;
 /
@@ -1225,6 +1234,12 @@ wwv_flow_imp_shared.create_menu_option(
 ,p_short_name=>'soapTest'
 ,p_link=>'f?p=&APP_ID.:3:&APP_SESSION.::&DEBUG.:::'
 ,p_page_id=>3
+);
+wwv_flow_imp_shared.create_menu_option(
+ p_id=>wwv_flow_imp.id(65095118511981867733)
+,p_short_name=>'emp_cal'
+,p_link=>'f?p=&APP_ID.:6:&APP_SESSION.::&DEBUG.:::'
+,p_page_id=>6
 );
 end;
 /
@@ -19158,6 +19173,59 @@ wwv_flow_imp_page.create_page_item(
 ,p_fc_initial_chart=>false
 ,p_fc_actions_filter=>true
 ,p_fc_toggleable=>false
+);
+end;
+/
+prompt --application/pages/page_00006
+begin
+wwv_flow_imp_page.create_page(
+ p_id=>6
+,p_name=>'emp_cal'
+,p_alias=>'EMP-CAL'
+,p_step_title=>'emp_cal'
+,p_autocomplete_on_off=>'OFF'
+,p_page_template_options=>'#DEFAULT#'
+,p_protection_level=>'C'
+,p_page_component_map=>'08'
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(65095118080886867733)
+,p_plug_name=>'Breadcrumb'
+,p_region_template_options=>'#DEFAULT#:t-BreadcrumbRegion--useBreadcrumbTitle'
+,p_component_template_options=>'#DEFAULT#'
+,p_plug_template=>wwv_flow_imp.id(60257399009765546105)
+,p_plug_display_sequence=>10
+,p_plug_display_point=>'REGION_POSITION_01'
+,p_menu_id=>wwv_flow_imp.id(60257282933263546054)
+,p_plug_source_type=>'NATIVE_BREADCRUMB'
+,p_menu_template_id=>wwv_flow_imp.id(60257661865992546133)
+);
+wwv_flow_imp_page.create_page_plug(
+ p_id=>wwv_flow_imp.id(65095118764264867734)
+,p_plug_name=>'emp_cal'
+,p_region_template_options=>'#DEFAULT#:t-Region--scrollBody'
+,p_escape_on_http_output=>'Y'
+,p_plug_template=>wwv_flow_imp.id(60257386610139546100)
+,p_plug_display_sequence=>10
+,p_query_type=>'TABLE'
+,p_query_table=>'OEHR_EMPLOYEES'
+,p_include_rowid_column=>false
+,p_plug_source_type=>'NATIVE_CSS_CALENDAR'
+,p_plug_query_num_rows=>15
+,p_attributes=>wwv_flow_t_plugin_attributes(wwv_flow_t_varchar2(
+  'additional_calendar_views', 'list:navigation',
+  'calendar_views_and_navigation', 'month:week:day:list:navigation',
+  'display_column', 'EMPLOYEE_ID',
+  'drag_and_drop', 'N',
+  'event_sorting', 'AUTOMATIC',
+  'first_hour', '9',
+  'maximum_events_day', '10',
+  'multiple_line_event', 'Y',
+  'show_time', 'N',
+  'show_tooltip', 'Y',
+  'show_weekend', 'Y',
+  'start_date_column', 'HIRE_DATE',
+  'time_format', '00')).to_clob
 );
 end;
 /
